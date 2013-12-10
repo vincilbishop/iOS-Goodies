@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Classes/*.h'
   s.source_files = 'Classes/**/*.{h,m}'
-  s.header_mappings_dir = 'Classes'
   s.prefix_header_contents = '#import "iOS-Goodies.h"'
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/iOS-Goodies"' }
   
   end
