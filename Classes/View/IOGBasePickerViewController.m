@@ -34,6 +34,8 @@
     pickerViewController.pickerView.delegate = pickerViewController;
     pickerViewController.pickerView.dataSource = pickerViewController;
     
+    pickerViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
     [viewController presentViewController:pickerViewController animated:YES completion:nil];
     
     
@@ -88,7 +90,8 @@
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.titles count];
+    NSInteger rows = [self.titles count];
+    return rows;
 }
 
 #pragma mark -UIPickerView Delegate Methods -
