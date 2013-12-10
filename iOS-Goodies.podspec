@@ -9,6 +9,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '6.0'
 
   s.public_header_files = 'Classes/*.{h,m}'
-  s.source_files = 'Classes/**/*.*'
+  s.source_files = 'Classes/**/*.{h,m}'
+  
+  spec.prefix_header_contents = '#import "iOS-Goodies.h"'
   
   end
