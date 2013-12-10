@@ -22,4 +22,9 @@ typedef void (^IOGBasePickerView_CancelBlock)();
 @property (nonatomic,copy) IOGBasePickerView_DoneBlock doneBlock;
 @property (nonatomic,copy) IOGBasePickerView_CancelBlock cancelBlock;
 
++ (void) displayInViewController:(UIViewController*)viewController
+                      dataSource:(IOGBasePickerView_DataSourceBlock)dataSource
+                            done:(IOGBasePickerView_DoneBlock)doneBlock
+                          cancel:(IOGBasePickerView_CancelBlock)cancelBlock;
+
 @end
