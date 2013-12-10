@@ -7,3 +7,4 @@
 //
 
 #import "IOGBasePickerViewController.h"
+#import "NSBundle+IOSGoodiesResourceBundle.h"

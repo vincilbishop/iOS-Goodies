@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NSArray (^IOGBasePickerView_DataSourceBlock)();
+typedef NSArray* (^IOGBasePickerView_DataSourceBlock)();
 typedef void (^IOGBasePickerView_DoneBlock)(id selectedObject);
 typedef void (^IOGBasePickerView_CancelBlock)();
 

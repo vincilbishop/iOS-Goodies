@@ -7,6 +7,7 @@
 //
 
 #import "IOGBasePickerViewController.h"
+#import "NSBundle+IOSGoodiesResourceBundle.h"
 
 @interface IOGBasePickerViewController ()
 
@@ -24,7 +25,7 @@
                             done:(IOGBasePickerView_DoneBlock)doneBlock
                           cancel:(IOGBasePickerView_CancelBlock)cancelBlock
 {
-    IOGBasePickerViewController *pickerViewController = [[IOGBasePickerViewController alloc] initWithNibName:@"IOGBasePickerViewController" bundle:nil];
+    IOGBasePickerViewController *pickerViewController = [[IOGBasePickerViewController alloc] initWithNibName:@"IOGBasePickerViewController" bundle:[NSBundle IOSGoodiesResourceBundle]];
 
     pickerViewController.dataSource = dataSource;
     pickerViewController.doneBlock = doneBlock;
