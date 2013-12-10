@@ -13,6 +13,6 @@ Pod::Spec.new do |spec|
   spec.source_files = 'Classes/**/*.{h,m}'
   spec.prefix_header_contents = '#import "iOS-Goodiespec.h"'
   
-  spec.ios.resource_bundle = { 'iOS-Goodies-Resources' => 'Resources/**/*.*' }
+  # spec.ios.resource_bundle = { 'iOS-Goodies-Resources' => 'Resources/**/*.*' }
 
 end
