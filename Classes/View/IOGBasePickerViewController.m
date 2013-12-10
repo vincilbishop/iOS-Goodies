@@ -21,15 +21,18 @@
 #pragma mark - Convenience Class Methods -
 
 + (void) displayInViewController:(UIViewController*)viewController
-                      dataSource:(IOGBasePickerView_DataSourceBlock)dataSource
+                          titles:(NSArray*)titles
                             done:(IOGBasePickerView_DoneBlock)doneBlock
                           cancel:(IOGBasePickerView_CancelBlock)cancelBlock
 {
     IOGBasePickerViewController *pickerViewController = [[IOGBasePickerViewController alloc] initWithNibName:@"IOGBasePickerViewController" bundle:[NSBundle IOSGoodiesResourceBundle]];
 
-    pickerViewController.dataSource = dataSource;
+    pickerViewController.titles = titles;
     pickerViewController.doneBlock = doneBlock;
     pickerViewController.cancelBlock = cancelBlock;
+    
+    pickerViewController.pickerView.delegate = pickerViewController;
+    pickerViewController.pickerView.dataSource = pickerViewController;
     
     [viewController presentViewController:pickerViewController animated:YES completion:nil];
     
@@ -58,15 +61,20 @@
     if (self.cancelBlock) {
         self.cancelBlock();
     }
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 
 - (IBAction) donePressed:(id)sender
 {
     if (self.doneBlock) {
-        self.doneBlock(self.dataSource[[self.pickerView selectedRowInComponent:0]]);
+        
+        NSInteger selectedIndex = [self.pickerView selectedRowInComponent:0];
+        NSString *selectedTitle = self.titles[selectedIndex];
+        self.doneBlock(selectedIndex,selectedTitle);
+        
     }
     
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - UIPickerView Data Source Methods -
@@ -74,13 +82,13 @@
 // returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 0;
+    return 1;
 }
 
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.dataSource count];
+    return [self.titles count];
 }
 
 #pragma mark -UIPickerView Delegate Methods -
@@ -90,7 +98,7 @@
 // If you return back a different object, the old one will be released. the view will be centered in the row rect
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return self.dataSource[row];
+    return self.titles[row];
 }
 
 - (void)didReceiveMemoryWarning

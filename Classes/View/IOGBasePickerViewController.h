@@ -8,22 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NSArray* (^IOGBasePickerView_DataSourceBlock)();
-typedef void (^IOGBasePickerView_DoneBlock)(id selectedObject);
+typedef id (^IOGBasePickerView_DataSourceBlock)();
+typedef void (^IOGBasePickerView_DoneBlock)(NSInteger selectedIndex, NSString *selectedTitle);
 typedef void (^IOGBasePickerView_CancelBlock)();
 
-@interface IOGBasePickerViewController : UIViewController
+@interface IOGBasePickerViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>
 
-@property (nonatomic,strong) NSArray *dataSource;
+@property (nonatomic,strong) NSArray *titles;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIPickerView *pickerView;
 
-@property (nonatomic,copy) IOGBasePickerView_DataSourceBlock dataSourceBlock;
 @property (nonatomic,copy) IOGBasePickerView_DoneBlock doneBlock;
 @property (nonatomic,copy) IOGBasePickerView_CancelBlock cancelBlock;
 
 + (void) displayInViewController:(UIViewController*)viewController
-                      dataSource:(IOGBasePickerView_DataSourceBlock)dataSource
+                      titles:(NSArray*)titles
                             done:(IOGBasePickerView_DoneBlock)doneBlock
                           cancel:(IOGBasePickerView_CancelBlock)cancelBlock;
 
