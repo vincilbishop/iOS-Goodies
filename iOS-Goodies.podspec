@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Classes/**/*.h'
   s.source_files = 'Classes/**/*.{h,m}'
   s.prefix_header_contents = '#import "iOS-Goodies.h"'
-  spec.header_mappings_dir = 'Classes'
+  s.header_mappings_dir = 'Classes'
   
 end
