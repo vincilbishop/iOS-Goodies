@@ -1,16 +1,18 @@
-Pod::Spec.new do |s|
-  s.name     = 'iOS-Goodies'
-  s.version  = '0.0.1'
-  s.license  = 'MIT'
-  s.summary  = 'A collection of useful, yet hard to continually recreate components. '
-  s.source   = { :git => 'https://github.com/premosystems/iOS-Goodies.git'}
-  s.requires_arc = true
+Pod::Spec.new do |spec|
 
-  s.ios.deployment_target = '6.0'
+  spec.name     = 'iOS-Goodies'
+  spec.version  = '0.0.1'
+  spec.license  = 'MIT'
+  spec.summary  = 'A collection of useful, yet hard to continually recreate componentspec. '
+  spec.source   = { :git => 'https://github.com/premosystems/iOS-Goodiespec.git'}
+  spec.requires_arc = true
 
-  s.public_header_files = 'Classes/**/*.h'
-  s.source_files = 'Classes/**/*.{h,m}'
-  s.prefix_header_contents = '#import "iOS-Goodies.h"'
-  s.header_mappings_dir = 'Classes'
+  spec.iospec.deployment_target = '6.0'
+
+  spec.public_header_files = 'Classes/**/*.h'
+  spec.source_files = 'Classes/**/*.{h,m}'
+  spec.prefix_header_contents = '#import "iOS-Goodiespec.h"'
   
+  spec.ios.resource_bundle = { 'iOS-Goodies-Resources' => 'Resources/**/*.*' }
+
 end
