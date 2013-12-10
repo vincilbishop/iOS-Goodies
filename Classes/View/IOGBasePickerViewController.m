@@ -34,7 +34,8 @@
     pickerViewController.pickerView.delegate = pickerViewController;
     pickerViewController.pickerView.dataSource = pickerViewController;
     
-    pickerViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    viewController.navigationController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [viewController presentViewController:pickerViewController animated:YES completion:nil];
     
