@@ -1,0 +1,3 @@
+[submodule "Classes/ThirdParty/ELCTextFieldCell"]
+	path = Classes/ThirdParty/ELCTextFieldCell
+	url = https://github.com/premosystems/ELCTextFieldCell
