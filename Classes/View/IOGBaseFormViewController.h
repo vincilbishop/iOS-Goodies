@@ -7,10 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "US2ValidatorUIDelegate.h"
 
-@interface IOGBaseFormViewController : UIViewController
+@class RDVKeyboardAvoidingScrollView;
+@class IOGBaseFormViewController;
+
+typedef void (^IOGValidationCallback)(IOGBaseFormViewController *formViewController);
+
+@interface IOGBaseFormViewController : UIViewController<US2ValidatorUIDelegate>
 
 @property (strong, nonatomic) NSMutableArray *textFields;
 @property (strong, nonatomic) IBOutlet RDVKeyboardAvoidingScrollView *scrollView;
+
+@property (nonatomic) BOOL isValid;
+
+@property (nonatomic,strong)  NSMutableString *errorString;
+
+- (void) validateForm;
+- (void) showAlertIfInvalidWithCompletion:(IOGValidationCallback)completion;
 
 @end

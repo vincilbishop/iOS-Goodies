@@ -7,6 +7,8 @@
 //
 
 #import "IOGBaseFormViewController.h"
+#import "RDVKeyboardAvoidingScrollView.h"
+#import "US2FormValidator.h"
 
 @interface IOGBaseFormViewController ()
 
@@ -37,32 +39,76 @@ static NSArray *_textFields;
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Validation Methods -
+
+- (void) validateForm
+{
+    // Create string which will contain the first error in form
+    self.errorString = [NSMutableString string];
+    self.isValid = YES;
+    
+    for (US2ValidatorTextField *textUI in self.textFields) {
+        
+        // If the text UI has invalid text remember the violated condition with highest priority
+        if ([textUI conformsToProtocol:@protocol(US2ValidatorUIProtocol)] && textUI.isValid == NO)
+        {
+            self.isValid = NO;
+            
+            US2Validator *validator = [textUI validator];
+            US2ConditionCollection *conditionCollection = [validator checkConditions:[textUI text]];
+            US2Condition *violatedCondition = [conditionCollection conditionAtIndex:0];
+            
+            NSMutableString *violatedString = [NSMutableString string];
+            [violatedString appendString:textUI.placeholder];
+            [violatedString appendString:@": "];
+            [violatedString appendString:[violatedCondition localizedViolationString]];
+            [self.errorString appendString:violatedString];
+            break;
+        }
+    }
+
+}
+
+- (void) showAlertIfInvalidWithCompletion:(IOGValidationCallback)completion
+{
+    [self validateForm];
+    // Show alert if there was an invalid text in UI
+    if (self.errorString.length > 0)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Form"
+                                                            message:self.errorString
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Continue"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+    if (completion) {
+        completion(self);
+    }
+}
+
 #pragma mark - Overrides -
 
 - (NSArray*) textFields
 {
     if (!_textFields) {
         
-        
+        @synchronized (self) {
             
             _textFields = [[NSMutableArray alloc] init];
             
-            for (UIView *view in self.view.subviews.reverseObjectEnumerator) {
+            for (UIView *view in self.view.subviews) {
                 
                 if ([view isKindOfClass:[UITextField class]]) {
                     
-                    UITextField *textField = (UITextField*)view;
-                    [_textFields addObject:textField];
-                    
+                    [_textFields addObject:view];
                 }
-                
             }
-            
-        
+        }
     }
     
     return _textFields;
-    
 }
 
 #pragma mark - UITextFieldDelegate
@@ -78,5 +124,33 @@ static NSArray *_textFields;
     
     return YES;
 }
+
+#pragma mark - US2ValidatorUIDelegate -
+
+/**
+ Will be called when the text in the text field changes. Has its origin in listening for UITextFieldTextDidChangeNotification.
+ 
+ @param validatorUI Instance of the sending validator text UI of type US2ValidatorTextField
+ */
+- (void)validatorUIDidChange:(id <US2ValidatorUIProtocol>)validatorUI
+{}
+
+/**
+ Will be called when a status changes from true to false or false to true.
+ 
+ @param validatorTextView Instance of the sending validator text field of type US2ValidatorTextView
+ @param isValid Returns the status of the validation check
+ */
+- (void)validatorUI:(id <US2ValidatorUIProtocol>)validatorUI changedValidState:(BOOL)isValid
+{}
+
+/**
+ Will be called if the text field check failed.
+ 
+ @param validatorTextView Instance of the sending validator text field of type US2ValidatorTextView
+ @param conditions Collection of type US2ConditionCollection listing all violated conditions.
+ */
+- (void)validatorUI:(id <US2ValidatorUIProtocol>)validatorUI violatedConditions:(US2ConditionCollection *)conditions
+{}
 
 @end

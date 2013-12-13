@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.public_header_files = 'Classes/**/*.h'
   spec.source_files = 'Classes/**/*.{h,m}'
   
-  spec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"'
+  spec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"'
   
   spec.ios.resource_bundle = { 'IOSGoodiesResources' => 'Resources/**/*.*' }
   

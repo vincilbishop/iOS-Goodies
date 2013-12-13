@@ -15,3 +15,6 @@
 
 // https://github.com/robbdimitrov/RDVKeyboardAvoiding
 #import "RDVKeyboardAvoidingScrollView.h"
+
+// https://github.com/ustwo/US2FormValidator
+#import "US2FormValidator.h"
