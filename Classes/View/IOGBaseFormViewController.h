@@ -17,7 +17,7 @@ typedef void (^IOGValidationCallback)(IOGBaseFormViewController *formViewControl
 @interface IOGBaseFormViewController : UIViewController<US2ValidatorUIDelegate>
 
 @property (strong, nonatomic) NSMutableArray *textFields;
-@property (strong, nonatomic) IBOutlet RDVKeyboardAvoidingScrollView *scrollView;
+
 
 @property (nonatomic) BOOL isValid;
 

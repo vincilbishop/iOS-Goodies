@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   
   spec.ios.resource_bundle = { 'IOSGoodiesResources' => 'Resources/**/*.*' }
   
-  spec.ios.dependency 'BSModalPickerView' # https://github.com/subdigital/BSModalPickerView
+#  spec.ios.dependency 'BSModalPickerView' # https://github.com/subdigital/BSModalPickerView
   spec.ios.dependency 'RDVKeyboardAvoiding' # https://github.com/robbdimitrov/RDVKeyboardAvoiding
   spec.ios.dependency 'US2FormValidator', '~> 1.1.2'    # https://github.com/ustwo/US2FormValidator
 #  spec.ios.dependency 'ELCTextFieldCell', '~> 0.2.0'    # https://github.com/B-Sides/ELCTextFieldCell
