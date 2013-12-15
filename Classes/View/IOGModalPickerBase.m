@@ -97,9 +97,9 @@
 - (void)onCancel:(id)sender {
     
     if (self.callbackBlock) {
-        self.callbackBlock(self.picker,NO);
+        self.callbackBlock(self,NO);
     } else if (self.dateCallbackBlock) {
-        self.callbackBlock(self.picker,NO);
+        self.callbackBlock(self,NO);
     }
     
     [self dismissPicker];
@@ -108,9 +108,9 @@
 - (void)onDone:(id)sender {
     
     if (self.callbackBlock) {
-        self.callbackBlock(self.picker,YES);
+        self.callbackBlock(self,YES);
     } else if (self.dateCallbackBlock) {
-        self.callbackBlock(self.picker,YES);
+        self.callbackBlock(self,YES);
     }
     
     [self dismissPicker];
