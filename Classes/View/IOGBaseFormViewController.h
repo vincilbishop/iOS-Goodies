@@ -15,7 +15,9 @@
 typedef void (^IOGValidationCallback)(IOGBaseFormViewController *formViewController);
 
 @interface IOGBaseFormViewController : UIViewController<US2ValidatorUIDelegate>
-
+{
+    NSMutableArray *_textFields;
+}
 @property (strong, nonatomic) NSMutableArray *textFields;
 
 

@@ -16,7 +16,7 @@
 
 @implementation IOGBaseFormViewController
 
-static NSArray *_textFields;
+@synthesize textFields=_textFields;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
