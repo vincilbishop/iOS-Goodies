@@ -18,3 +18,6 @@
 
 // https://github.com/ustwo/US2FormValidator
 #import "US2FormValidator.h"
+
+#import "UIActionSheet+Blocks.h"
+#import "UIAlertView+Blocks.h"
