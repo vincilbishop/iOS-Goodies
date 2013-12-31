@@ -16,9 +16,12 @@
 
 #pragma mark - Static Convenience Methods -
 
-+ (IOGModalPickerView*) pickerWithValues:(NSArray*)values block:(IOGModalPickerViewCallback)callback
++ (IOGModalPickerView*) pickerWithValues:(NSArray*)values
+                                  titles:(NSArray*)titles
+                                   block:(IOGModalPickerViewCallback)callback
 {
     IOGModalPickerView *picker = [[IOGModalPickerView alloc] initWithValues:values];
+    picker.titles = titles;
     picker.picker.backgroundColor =[UIColor whiteColor];
     picker.callbackBlock = callback;
     [picker presentInWindow];
@@ -31,7 +34,7 @@
 - (id)initWithValues:(NSArray *)values {
     self = [super init];
     if (self) {
-        self.values = values;
+        self.titles = values;
         self.userInteractionEnabled = YES;
     }
     return self;
@@ -48,16 +51,20 @@
     return pickerView;
 }
 
-- (NSString *)selectedValue {
+- (NSString *)selectedTitle {
+    return [self.titles objectAtIndex:self.selectedIndex];
+}
+
+- (id)selectedValue {
     return [self.values objectAtIndex:self.selectedIndex];
 }
 
 #pragma mark - Custom Setters
 
-- (void)setValues:(NSArray *)values {
-    _values = values;
+- (void)setTitles:(NSArray *)titles {
+    _titles = titles;
     
-    if (_values) {
+    if (_titles) {
         if (self.picker) {
             UIPickerView *pickerView = (UIPickerView *)self.picker;
             [pickerView reloadAllComponents];
@@ -77,7 +84,7 @@
 }
 
 - (void)setSelectedValue:(NSString *)selectedValue {
-    NSInteger index = [self.values indexOfObject:selectedValue];
+    NSInteger index = [self.titles indexOfObject:selectedValue];
     [self setSelectedIndex:index];
 }
 
@@ -95,13 +102,13 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return self.values.count;
+    return self.titles.count;
 }
 
 #pragma mark - Picker View Delegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [self.values objectAtIndex:row];
+    return [self.titles objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

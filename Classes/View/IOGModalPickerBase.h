@@ -25,6 +25,7 @@ typedef void (^IOGModalDatePickerViewCallback)(IOGModalDatePickerView *datePicke
 @property (nonatomic, strong) UIView *backdropView;
 @property (nonatomic, strong) IOGModalPickerViewCallback callbackBlock;
 @property (nonatomic, strong) IOGModalDatePickerViewCallback dateCallbackBlock;
+@property (nonatomic, strong) NSArray *values;
 
 @property (nonatomic, strong) UIView *picker;
 
