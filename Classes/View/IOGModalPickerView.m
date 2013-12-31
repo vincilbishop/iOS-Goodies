@@ -20,8 +20,8 @@
                                   titles:(NSArray*)titles
                                    block:(IOGModalPickerViewCallback)callback
 {
-    IOGModalPickerView *picker = [[IOGModalPickerView alloc] initWithValues:values];
-    picker.titles = titles;
+    IOGModalPickerView *picker = [[IOGModalPickerView alloc] initWithTitles:titles];
+    picker.values = values;
     picker.picker.backgroundColor =[UIColor whiteColor];
     picker.callbackBlock = callback;
     [picker presentInWindow];
@@ -31,10 +31,10 @@
 
 #pragma mark - Designated Initializer
 
-- (id)initWithValues:(NSArray *)values {
+- (id)initWithTitles:(NSArray *)titles {
     self = [super init];
     if (self) {
-        self.titles = values;
+        self.titles = titles;
         self.userInteractionEnabled = YES;
     }
     return self;
@@ -56,7 +56,15 @@
 }
 
 - (id)selectedValue {
-    return [self.values objectAtIndex:self.selectedIndex];
+    
+    if (self.values && self.values.count > self.selectedIndex) {
+        
+        return [self.values objectAtIndex:self.selectedIndex];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 #pragma mark - Custom Setters

@@ -21,6 +21,6 @@
 /* Initializes a new instance of the picker with the values to present to the user.
  (Note: call presentInView:withBlock: or presentInWindowWithBlock: to display the control)
  */
-- (id)initWithValues:(NSArray *)values;
+- (id)initWithTitles:(NSArray *)values;
 
 @end
