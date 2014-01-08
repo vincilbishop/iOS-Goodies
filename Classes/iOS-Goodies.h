@@ -9,9 +9,10 @@
 #import "IOGBaseFormViewController.h"
 #import "NSBundle+IOSGoodiesResourceBundle.h"
 
-// https://github.com/subdigital/IOGModalPickerView
 #import "IOGModalPickerView.h"
 #import "IOGModalDatePickerView.h"
+
+#import "IOGLocationController.h"
 
 // https://github.com/robbdimitrov/RDVKeyboardAvoiding
 #import "RDVKeyboardAvoidingScrollView.h"
