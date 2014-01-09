@@ -14,8 +14,7 @@
 
 @property (nonatomic,strong) CLLocationManager *locationManager;
 
-@property (nonatomic,strong) CLLocation *currentLocation;
-@property (nonatomic,strong) CLLocation *lastLocation;
+@property (nonatomic,strong) NSArray *locations;
 
 + (IOGLocationController*) sharedController;
 

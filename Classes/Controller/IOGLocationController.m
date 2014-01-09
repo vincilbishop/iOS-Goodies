@@ -47,10 +47,7 @@ static IOGLocationController *_sharedController;
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
-        self.currentLocation = newLocation;
-        self.lastLocation = oldLocation;
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kIOGLocationController_LocationUpdated_Notification object:self];
+    
 }
 
 /*
@@ -65,7 +62,10 @@ static IOGLocationController *_sharedController;
  */
 - (void)locationManager:(CLLocationManager *)manager
 	 didUpdateLocations:(NSArray *)locations
-{}
+{
+    self.locations = locations;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kIOGLocationController_LocationUpdated_Notification object:self];
+}
 
 /*
  *  locationManager:didUpdateHeading:
