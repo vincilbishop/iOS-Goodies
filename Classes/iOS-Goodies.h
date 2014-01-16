@@ -11,6 +11,7 @@
 
 #import "IOGModalPickerView.h"
 #import "IOGModalDatePickerView.h"
+#import "IOGBaseMenuTableViewController.h"
 
 #import "IOGLocationController.h"
 
