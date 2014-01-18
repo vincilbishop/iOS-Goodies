@@ -35,7 +35,13 @@ static IOGLocationController *_sharedController;
 
 - (CLLocation*) lastLocation
 {
-    return [self.locations lastObject];
+    // TODO: Uncomment the following line when we are ready for real locations
+    //return [self.locations lastObject];
+    
+    // +37.78735890,-122.40822700
+    CLLocation *mockLocation = [[CLLocation alloc] initWithLatitude:37.78735890 longitude:-122.40822700];
+    
+    return mockLocation;
 }
 
 /*
