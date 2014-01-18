@@ -16,6 +16,8 @@
 
 @property (nonatomic,strong) NSArray *locations;
 
+- (CLLocation*) lastLocation;
+
 + (IOGLocationController*) sharedController;
 
 @end

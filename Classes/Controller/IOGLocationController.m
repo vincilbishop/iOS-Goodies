@@ -33,6 +33,11 @@ static IOGLocationController *_sharedController;
     return self;
 }
 
+- (CLLocation*) lastLocation
+{
+    return [self.locations lastObject];
+}
+
 /*
  *  locationManager:didUpdateToLocation:fromLocation:
  *
@@ -64,7 +69,11 @@ static IOGLocationController *_sharedController;
 	 didUpdateLocations:(NSArray *)locations
 {
     self.locations = locations;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kIOGLocationController_LocationUpdated_Notification object:self];
+    
+    // TODO: add a flag here so that when starting location updates, one can choose whether to only update location once, or continually monitor locations as the user moves....
+    [manager stopUpdatingLocation];
 }
 
 /*
