@@ -52,7 +52,12 @@
 }
 
 - (NSString *)selectedTitle {
-    return [self.titles objectAtIndex:self.selectedIndex];
+    
+    if (self.titles && self.titles.count > 0) {
+        return [self.titles objectAtIndex:self.selectedIndex];
+    } else {
+        return nil;
+    }
 }
 
 - (id)selectedValue {
