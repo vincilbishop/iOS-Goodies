@@ -22,6 +22,7 @@ Pod::Spec.new do |spec|
   spec.ios.dependency 'RSCategories', '~> 0.1' # https://github.com/reejosamuel/RSCategories
   spec.ios.dependency 'UIAlertView+Blocks'
   spec.ios.dependency 'UIActionSheet+Blocks'
+  spec.ios.dependency 'HexColors'
   
   spec.ios.framework = 'CoreLocation'
 

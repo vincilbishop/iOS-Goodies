@@ -23,3 +23,4 @@
 
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
+#import "HexColor.h"
