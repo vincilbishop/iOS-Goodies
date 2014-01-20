@@ -12,6 +12,7 @@
 #import "IOGModalPickerView.h"
 #import "IOGModalDatePickerView.h"
 #import "IOGBaseMenuTableViewController.h"
+#import "IOGBaseEditableTableViewController.h"
 
 #import "IOGLocationController.h"
 
