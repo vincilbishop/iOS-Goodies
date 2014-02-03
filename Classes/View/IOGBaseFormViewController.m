@@ -9,6 +9,7 @@
 #import "IOGBaseFormViewController.h"
 #import "RDVKeyboardAvoidingScrollView.h"
 #import "US2FormValidator.h"
+#import "UIView+HierarchyAdditions.h"
 
 @interface IOGBaseFormViewController ()
 
@@ -98,7 +99,7 @@
             
             _textFields = [[NSMutableArray alloc] init];
             
-            for (UIView *view in self.view.subviews) {
+            for (UIView *view in self.view.allSubviews) {
                 
                 if ([view isKindOfClass:[UITextField class]]) {
                     
