@@ -32,17 +32,16 @@ Pod::Spec.new do |spec|
 	viewSpec.subspec "ViewCategories" do |categorySpec|
 		categorySpec.source_files = 'Classes/View/Categories/*.{h,m}'
 	end
-	
   end
   
   spec.subspec "Controller" do |controllerSpecs|
 	
 		controllerSpecs.subspec "AWS" do |sp|
 			sp.subspec "S3" do |s3|
-				s3.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"'
 				s3.source_files = 'Classes/Controller/AWS/S3/*.{h,m}'
 				s3.ios.dependency 'AWSiOSSDK/S3', '~>1.7.1'
 				s3.ios.dependency 'CocoaLumberjack', '~>1.8.0'
+				s3.ios.dependency 'iOS-Goodies/Controller/LumberjackHelpers'
 			end
 		end
 		
@@ -50,9 +49,12 @@ Pod::Spec.new do |spec|
 			sp.source_files = 'Classes/Controller/EnvironmentConfig/*.{h,m}'
 			sp.dependency 'iOS-Goodies/Controller/Categories'
 			sp.ios.framework = 'CoreLocation'
+			s3.ios.dependency 'CocoaLumberjack', '~>1.8.0'
+			s3.ios.dependency 'iOS-Goodies/Controller/LumberjackHelpers'
 		end
 		
 		controllerSpecs.subspec "LumberjackHelpers" do |sp|
+			s3.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"'
 			sp.source_files = 'Classes/Controller/LumberjackHelpers/*.{h,m}'
 		end
 		
@@ -66,13 +68,4 @@ Pod::Spec.new do |spec|
 			sp.source_files = 'Classes/Controller/Categories/*.{h,m}'
 		end
   end
-  
-  
-  
-  
-  
-  
-  
-  
-
 end

@@ -7,6 +7,12 @@
 
 #import "IOGAWSS3Manager.h"
 
+#define IOGAWSS3Manager_DidReceiveResponse_Notification @"IOGAWSS3Manager_DidReceiveResponse_Notification"
+#define IOGAWSS3Manager_DidReceiveData_Notification @"IOGAWSS3Manager_DidReceiveData_Notification"
+#define IOGAWSS3Manager_DidCompleteWithResponse_Notification @"IOGAWSS3Manager_DidCompleteWithResponse_Notification"
+#define IOGAWSS3Manager_DidFailWithError_Notification @"IOGAWSS3Manager_DidFailWithError_Notification"
+#define IOGAWSS3Manager_DidFailWithServiceException_Notification @"IOGAWSS3Manager_DidFailWithServiceException_Notification"
+
 @interface IOGAWSS3Manager ()
 
 @property (nonatomic,strong) AmazonS3Client *s3Client;
@@ -40,7 +46,8 @@ static NSString *_secretKey;
     self = [super init];
     
     if (self) {
-        
+        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
+        [AmazonErrorHandler shouldNotThrowExceptions];
     }
     
     return self;
@@ -74,42 +81,62 @@ static NSString *_secretKey;
     return _s3TransferManager;
 }
 
+#pragma mark - Helper Methods -
+
+- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGAWSS3ManagerCompletionBlock)completionBlock
+{
+    [self.backgroundOperationQueue addOperationWithBlock:^{
+        AmazonServiceResponse *response = [[[IOGAWSS3Manager sharedManager] s3TransferManager] synchronouslyUploadFile:filePath bucket:bucket key:s3Filename];
+        
+        DDLogVerbose(@"Async Upload Finished: %@", response);
+        
+        if (response.error) {
+            
+            DDLogVerbose(@"error: %@", response.error);
+        
+            if (completionBlock) {
+                completionBlock(self,NO,response.error,nil);
+            }
+            
+        } else {
+            
+            if (completionBlock) {
+                completionBlock(self,YES,nil,response);
+            }
+        }
+    }];
+}
+
 #pragma mark - AmazonServiceRequestDelegate
 
 -(void)request:(AmazonServiceRequest *)request didReceiveResponse:(NSURLResponse *)response
 {
-
     DDLogVerbose(@"didReceiveResponse called: %@", response);
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:IOGAWSS3Manager_DidReceiveResponse_Notification object:response];
 }
 
 - (void)request:(AmazonServiceRequest *)request didReceiveData:(NSData *)data
 {
-
     DDLogVerbose(@"%@",@"didReceiveData called");
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:IOGAWSS3Manager_DidReceiveData_Notification object:data];
 }
 
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response
 {
-
     DDLogVerbose(@"didCompleteWithResponse called: %@", response);
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:IOGAWSS3Manager_DidCompleteWithResponse_Notification object:response];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error
 {
-
     DDLogVerbose(@"didFailWithError called: %@", error);
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:IOGAWSS3Manager_DidFailWithError_Notification object:error userInfo:@{@"request":request}];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception
 {
-
     DDLogVerbose(@"didFailWithServiceException called: %@", exception);
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:IOGAWSS3Manager_DidFailWithServiceException_Notification object:exception userInfo:@{@"request":request}];
 }
-
 
 @end

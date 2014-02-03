@@ -84,11 +84,9 @@
     id value = [self.configValues valueForKey:key];
     
     if (!value) {
-#ifdef DDLogError
         // It can be hard to find when a value is missing, let's give oursleves a hint...
         NSString *errorMessage = [NSString stringWithFormat:@"Config Key [%@] not found in environment configuration!!!",key];
         DDLogError(@"%@",errorMessage);
-#endif
     }
 
     return value;
