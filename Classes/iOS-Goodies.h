@@ -7,7 +7,6 @@
 //
 
 #import "IOGBaseFormViewController.h"
-#import "NSBundle+IOSGoodiesResourceBundle.h"
 
 #import "IOGModalPickerView.h"
 #import "IOGModalDatePickerView.h"

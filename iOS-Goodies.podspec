@@ -49,12 +49,12 @@ Pod::Spec.new do |spec|
 			sp.source_files = 'Classes/Controller/EnvironmentConfig/*.{h,m}'
 			sp.dependency 'iOS-Goodies/Controller/Categories'
 			sp.ios.framework = 'CoreLocation'
-			s3.ios.dependency 'CocoaLumberjack', '~>1.8.0'
-			s3.ios.dependency 'iOS-Goodies/Controller/LumberjackHelpers'
+			sp.ios.dependency 'CocoaLumberjack', '~>1.8.0'
+			sp.ios.dependency 'iOS-Goodies/Controller/LumberjackHelpers'
 		end
 		
 		controllerSpecs.subspec "LumberjackHelpers" do |sp|
-			s3.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"'
+			sp.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"'
 			sp.source_files = 'Classes/Controller/LumberjackHelpers/*.{h,m}'
 		end
 		
