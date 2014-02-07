@@ -11,6 +11,7 @@
 
 @interface IOGEnvironmentConfig ()
 
+@property (nonatomic, strong) NSDictionary *configValues;
 @property (nonatomic,strong) NSBundle *resourceBundle;
 @property (nonatomic,strong) NSString *infoPListEnvironmentKey;
 @property (nonatomic,strong) NSString *environmentPListFilename;
@@ -19,6 +20,28 @@
 @end
 
 @implementation IOGEnvironmentConfig
+
+static IOGEnvironmentConfig *_sharedConfig;
+
++ (IOGEnvironmentConfig*) sharedConfig
+{
+    if (!_sharedConfig) {
+        _sharedConfig = [[IOGEnvironmentConfig alloc] init];
+    }
+    
+    return _sharedConfig;
+}
+
+- (id) init
+{
+    self = [super init];
+    
+    if (self) {
+        [self loadEnvironmentConfig];
+    }
+    
+    return self;
+}
 
 - (id)initWithPListFilename:(NSString*)environmentPListFilename environmentKey:(NSString*)infoPListEnvironmentKey defaultConfigKey:(NSString*)defaultConfigurationKey resourceBundle:(NSBundle*)resourceBundle
 {
@@ -62,6 +85,10 @@
         self.infoPListEnvironmentKey = @"Environment";
     }
     
+    if (!self.environmentPListFilename) {
+        self.environmentPListFilename = @"Environments.plist";
+    }
+    
     NSString* configurationDict = [[self.resourceBundle infoDictionary] objectForKey:self.infoPListEnvironmentKey];
     NSBundle* bundle = self.resourceBundle;
     NSString* envsPListPath = [bundle pathForResource:self.environmentPListFilename ofType:nil];
@@ -91,5 +118,8 @@
 
     return value;
 }
+
+// https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtDynamicResolution.html
+#pragma mark - Dynamic Method Resolution -
 
 @end
