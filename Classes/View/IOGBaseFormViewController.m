@@ -60,8 +60,13 @@
             US2Condition *violatedCondition = [conditionCollection conditionAtIndex:0];
             
             NSMutableString *violatedString = [NSMutableString string];
-            [violatedString appendString:textUI.placeholder];
-            [violatedString appendString:@": "];
+            
+            if (textUI.placeholder) {
+                [violatedString appendString:textUI.placeholder];
+                [violatedString appendString:@": "];
+
+            }
+            
             [violatedString appendString:[violatedCondition localizedViolationString]];
             [self.errorString appendString:violatedString];
             break;
