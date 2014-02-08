@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
+#import <CoreLocation/CoreLocation.h>
+#import "IOGBlocks.h"
 
-@interface IOGPeripheralManager : CBPeripheralManager
+#define kIOGPeripheralManager_DidUpdateState_Notification @"kIOGPeripheralManager_DidUpdateState_Notification"
+
+@interface IOGPeripheralManager : CBPeripheralManager<CBPeripheralManagerDelegate>
+
+@property (nonatomic,strong) CBPeripheralManager *peripheralManager;
+
++ (IOGPeripheralManager*) sharedManager;
+
+- (void) startAdvertisingWithRegion:(CLBeaconRegion*)beaconRegion completion:(IOGCompletionBlock)completionBlock;
 
 @end

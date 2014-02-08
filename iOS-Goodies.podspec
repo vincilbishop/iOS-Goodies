@@ -60,10 +60,16 @@ Pod::Spec.new do |spec|
 			sp.source_files = 'Classes/Controller/LumberjackHelpers/*.{h,m}'
 		end
 		
-		controllerSpecs.subspec "LocationManager" do |sp|
-			sp.prefix_header_contents = '#import <CoreLocation/CoreLocation.h>'
-			sp.source_files = 'Classes/Controller/LocationManager/*.{h,m}'
+		controllerSpecs.subspec "CoreLocation" do |sp|
+			sp.prefix_header_contents = '#import <CoreLocation/CoreLocation.h>'	
+            sp.source_files = 'Classes/Controller/CoreLocation/*.{h,m}'
 			sp.ios.framework = 'CoreLocation'
+		end
+        
+        controllerSpecs.subspec "CoreBluetooth" do |sp|
+			sp.prefix_header_contents = '#import <CoreBluetooth/CoreBluetooth.h>'
+			sp.source_files = 'Classes/Controller/CoreBluetooth/*.{h,m}'
+            sp.ios.framework = 'CoreBluetooth'
 		end
 		
 		controllerSpecs.subspec "Categories" do |sp|

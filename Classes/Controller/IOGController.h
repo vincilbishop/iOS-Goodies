@@ -10,7 +10,8 @@
 #import "Lumberjack-Default-Log-Level.h"
 #import "IOGBlocks.h"
 #import "IOGCategories.h"
-#import "IOGLocationController.h"
+#import "IOGLocationManager.h"
 #import "IOGEnvironmentConfig.h"
 #import "IOGAWSS3Manager.h"
+#import "IOGPeripheralManager.h"
 
