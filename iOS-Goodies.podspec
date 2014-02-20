@@ -18,8 +18,9 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec "View" do |viewSpec|
-	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"'
+	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"', '#import "IOGBlocks.h"'
 	viewSpec.source_files = 'Classes/View/*.{h,m}'
+    viewSpec.ios.dependency 'iOS-Goodies/Controller/Blocks'
 	viewSpec.ios.dependency 'MBProgressHUD'
 	viewSpec.ios.dependency 'RDVKeyboardAvoiding' # https://github.com/robbdimitrov/RDVKeyboardAvoiding
 	viewSpec.ios.dependency 'US2FormValidator', '~> 1.1.2'	# https://github.com/ustwo/US2FormValidator
@@ -27,6 +28,7 @@ Pod::Spec.new do |spec|
 	viewSpec.ios.dependency 'UIAlertView+Blocks'
 	viewSpec.ios.dependency 'UIActionSheet+Blocks'
 	viewSpec.ios.dependency 'HexColors'
+    viewSpec.ios.dependency 'MMDrawerController', '~> 0.5.2'
 	viewSpec.ios.resource_bundle = { 'IOSGViewResources' => 'Resources/**/*.*' }
 	
 	viewSpec.subspec "ViewCategories" do |categorySpec|
@@ -38,6 +40,8 @@ Pod::Spec.new do |spec|
   spec.subspec "Controller" do |controllerSpecs|
 	 controllerSpecs.source_files = 'Classes/Controller/IOGController.h'
      
+     controllerSpecs.dependency 'OpenUDID'
+
 		controllerSpecs.subspec "AWS" do |sp|
 			sp.subspec "S3" do |s3|
 				s3.source_files = 'Classes/Controller/AWS/S3/*.{h,m}'
@@ -79,6 +83,7 @@ Pod::Spec.new do |spec|
         
         controllerSpecs.subspec "Blocks" do |sp|
 			sp.source_files = 'Classes/Controller/Blocks/*.h'
+            # sp.dependency 'BlocksKit', '~>2.0.0'
 		end
   end
 end

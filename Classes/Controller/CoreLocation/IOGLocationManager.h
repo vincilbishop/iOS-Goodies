@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "IOGBlocks.h"
 
 #define kIOGLocationManager_DidUpdateLocations_Notification @"kIOGLocationManager_DidUpdateLocations_Notification "

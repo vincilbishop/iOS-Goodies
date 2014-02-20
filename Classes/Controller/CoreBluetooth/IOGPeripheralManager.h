@@ -13,7 +13,7 @@
 
 #define kIOGPeripheralManager_DidUpdateState_Notification @"kIOGPeripheralManager_DidUpdateState_Notification"
 
-@interface IOGPeripheralManager : CBPeripheralManager<CBPeripheralManagerDelegate>
+@interface IOGPeripheralManager : NSObject<CBPeripheralManagerDelegate>
 
 @property (nonatomic,strong) CBPeripheralManager *peripheralManager;
 

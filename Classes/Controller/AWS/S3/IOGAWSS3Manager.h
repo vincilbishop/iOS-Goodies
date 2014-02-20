@@ -35,7 +35,9 @@
 #import "AmazonS3Client.h"
 #import "S3TransferManager.h"
 
-typedef void (^IOGAWSS3ManagerCompletionBlock)(id sender, BOOL success, NSError *error, id result);
+#import "IOGBlocks.h"
+
+//typedef void (^IOGCompletionBlock)(id sender, BOOL success, NSError *error, id result);
 
 @interface IOGAWSS3Manager : NSObject<AmazonServiceRequestDelegate>
 
@@ -50,6 +52,6 @@ typedef void (^IOGAWSS3ManagerCompletionBlock)(id sender, BOOL success, NSError 
 + (void) setAccessKeyID:(NSString*)accessKeyID;
 + (void) setSecretKey:(NSString*)secretKey;
 
-- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGAWSS3ManagerCompletionBlock)completionBlock;
+- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock;
 
 @end

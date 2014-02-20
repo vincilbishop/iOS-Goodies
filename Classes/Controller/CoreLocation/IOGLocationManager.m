@@ -7,7 +7,7 @@
 //
 
 #import "IOGLocationManager.h"
-
+#import "IOGCategories.h"
 
 @implementation IOGLocationManager
 
@@ -37,7 +37,7 @@ static IOGLocationManager *_sharedManager;
 
 - (void) getLocationAndStopWithCompletion:(IOGCompletionBlock)completionBlock
 {
-    id observer = nil;
+    __block id observer = nil;
     observer = [[NSNotificationCenter defaultCenter] addObserverForName:kIOGLocationManager_DidUpdateLocations_Notification object:observer queue:[[NSOperationQueue alloc] init] usingBlock:^(NSNotification *note) {
         
         // TODO: Make a check for manager instance, date, sanity, etc.
@@ -55,22 +55,37 @@ static IOGLocationManager *_sharedManager;
 
 - (void) getBeaconsAndStopInRegion:(CLBeaconRegion*)region completion:(IOGCompletionBlock)completionBlock
 {
-    id observer = nil;
+    __block BOOL found = NO;
+    
+    __block id observer = nil;
     observer = [[NSNotificationCenter defaultCenter] addObserverForName:kIOGLocationManager_DidRangeBeaconsInRegion_Notification object:observer queue:[[NSOperationQueue alloc] init] usingBlock:^(NSNotification *note) {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:observer];
+        [self stopRangingBeaconsInRegion:region];
+        
+        found = YES;
         
         // TODO: Make a check for manager instance, date, sanity, etc.
         // Make sure that this is the right call for the beacon region we were monitoring...
         if (completionBlock) {
             completionBlock(self,YES,nil,self.beacons);
         }
-        
-        [self stopRangingBeaconsInRegion:region];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:observer];
     }];
     
     [self startRangingBeaconsInRegion:region];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if (!found) {
+            [[NSNotificationCenter defaultCenter] removeObserver:observer];
+            
+            [self stopRangingBeaconsInRegion:region];
+            
+            if (completionBlock) {
+                completionBlock(self,NO,nil,nil);
+            }
+        }
 
+    } afterDelay:3.0];
 }
 
 #pragma mark - Location Information -
@@ -106,11 +121,7 @@ static IOGLocationManager *_sharedManager;
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
-    NSMutableDictionary *newBeacons = [self.beacons mutableCopy];
-    
-    [newBeacons setObject:beacons forKey:region];
-    
-    self.beacons = newBeacons;
+    self.beacons = beacons;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kIOGLocationManager_DidRangeBeaconsInRegion_Notification object:self userInfo:@{@"locationManager":manager,@"beacons":beacons,@"region":region}];
     

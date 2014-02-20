@@ -41,33 +41,41 @@ static IOGPeripheralManager *_sharedManager;
 {
     NSDictionary *beaconPeripheralData = [beaconRegion peripheralDataWithMeasuredPower:nil];
     
-    id observer = nil;
-    observer = [[NSNotificationCenter defaultCenter] addObserverForName:kIOGPeripheralManager_DidUpdateState_Notification object:observer queue:[[NSOperationQueue alloc] init] usingBlock:^(NSNotification *note) {
+    if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
         
-        if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
-            
-            DDLogVerbose(@"Powered On");
-            [self startAdvertising:beaconPeripheralData];
-            
-            [[NSNotificationCenter defaultCenter] removeObserver:observer];
-            
-            if (completionBlock) {
-                completionBlock(self,YES,nil,self);
-            }
+        [self.peripheralManager startAdvertising:beaconPeripheralData];
+        
+        if (completionBlock) {
+            completionBlock(self,YES,nil,self);
         }
-        else if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOff)
-        {
-            [self stopAdvertising];
+    } else {
+        
+        __block id observer = nil;
+        observer = [[NSNotificationCenter defaultCenter] addObserverForName:kIOGPeripheralManager_DidUpdateState_Notification object:observer queue:[[NSOperationQueue alloc] init] usingBlock:^(NSNotification *note) {
             
-            [[NSNotificationCenter defaultCenter] removeObserver:observer];
-            
-            if (completionBlock) {
-                completionBlock(self,NO,nil,self);
+            if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
+                
+                DDLogVerbose(@"Powered On");
+                [self.peripheralManager startAdvertising:beaconPeripheralData];
+                
+                [[NSNotificationCenter defaultCenter] removeObserver:observer];
+                
+                if (completionBlock) {
+                    completionBlock(self,YES,nil,self);
+                }
             }
-        
-        }         
-        
-    }];
+            else if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOff)
+            {
+                [self.peripheralManager stopAdvertising];
+                
+                [[NSNotificationCenter defaultCenter] removeObserver:observer];
+                
+                if (completionBlock) {
+                    completionBlock(self,NO,nil,self);
+                }
+            }
+        }];
+    }
 }
 
 #pragma mark - CBPeripheralManagerDelegate -

@@ -12,6 +12,7 @@
 #import "IOGModalDatePickerView.h"
 #import "IOGBaseMenuTableViewController.h"
 #import "IOGBaseEditableTableViewController.h"
+#import "IOGImagePickerController.h"
 
 // Third Party View
 #import "RDVKeyboardAvoidingScrollView.h"
@@ -22,3 +23,4 @@
 #import "UIView+HierarchyAdditions.h"
 #import "UIView+RemoveSubviews.h"
 #import "MBProgressHUD.h"
+
