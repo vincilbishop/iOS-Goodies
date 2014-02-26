@@ -13,7 +13,7 @@
 
 static IOGErrorHelper *_sharedHelper;
 
-- (IOGErrorHelper*) sharedHelper
++ (IOGErrorHelper*) sharedHelper
 {
     if (!_sharedHelper) {
         _sharedHelper = [[IOGErrorHelper alloc] init];
@@ -37,7 +37,7 @@ static IOGErrorHelper *_sharedHelper;
 
 - (void) showErrorAlert:(NSError*)error
 {
-    [UIAlertView showWithTitle:@"Error" message:[NSString stringWithFormat:@"%@",error.localizedRecoverySuggestion] cancelButtonTitle:@"Ok" otherButtonTitles:nil tapBlock:NULL];
+    [UIAlertView showWithTitle:@"Error" message:[NSString stringWithFormat:@"%@",error] cancelButtonTitle:@"Ok" otherButtonTitles:nil tapBlock:NULL];
 }
 
 #pragma mark - Notification -

@@ -13,6 +13,7 @@
 #import "IOGBaseMenuTableViewController.h"
 #import "IOGBaseEditableTableViewController.h"
 #import "IOGImagePickerController.h"
+#import "IOGErrorHelper.h"
 
 // Third Party View
 #import "RDVKeyboardAvoidingScrollView.h"

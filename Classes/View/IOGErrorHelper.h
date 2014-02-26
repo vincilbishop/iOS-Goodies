@@ -12,7 +12,7 @@
 
 @interface IOGErrorHelper : NSObject
 
-- (IOGErrorHelper*) sharedHelper;
++ (IOGErrorHelper*) sharedHelper;
 
 - (void) showErrorAlert:(NSError*)error;
 

@@ -40,12 +40,16 @@ static IOGLocationManager *_sharedManager;
     __block id observer = nil;
     observer = [[NSNotificationCenter defaultCenter] addObserverForName:kIOGLocationManager_DidUpdateLocations_Notification object:observer queue:[[NSOperationQueue alloc] init] usingBlock:^(NSNotification *note) {
         
-        // TODO: Make a check for manager instance, date, sanity, etc.
-        completionBlock(self,YES,nil,self.location);
+        //[self stopMonitoringSignificantLocationChanges];
         
-        [self stopMonitoringSignificantLocationChanges];
+        if (completionBlock) {
+            // TODO: Make a check for manager instance, date, sanity, etc.
+            completionBlock(self,YES,nil,self.lastLocation);
+            
+        }
         
         [[NSNotificationCenter defaultCenter] removeObserver:observer];
+
     }];
     
     [self startMonitoringSignificantLocationChanges];
