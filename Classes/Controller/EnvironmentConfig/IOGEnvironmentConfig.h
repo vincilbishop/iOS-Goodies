@@ -15,7 +15,8 @@
 @interface IOGEnvironmentConfig : NSObject
 
 
-@property (nonatomic,readonly) NSDictionary *configValues;
+
++ (IOGEnvironmentConfig*) sharedConfig;
 
 /**
 	Initializes the instance with property values.

@@ -11,15 +11,16 @@ Pod::Spec.new do |spec|
  
   spec.resource = 'iOS-Goodies.podspec'
   
-  spec.source_files = 'Classes/iOS-Goodies.{h,m}'
+  spec.source_files = 'Classes/*.{h,m}'
   
   spec.subspec "Model" do |sp|
 	  
   end
   
   spec.subspec "View" do |viewSpec|
-	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"'
+	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"', '#import "IOGBlocks.h"'
 	viewSpec.source_files = 'Classes/View/*.{h,m}'
+    viewSpec.ios.dependency 'iOS-Goodies/Controller/Blocks'
 	viewSpec.ios.dependency 'MBProgressHUD'
 	viewSpec.ios.dependency 'RDVKeyboardAvoiding' # https://github.com/robbdimitrov/RDVKeyboardAvoiding
 	viewSpec.ios.dependency 'US2FormValidator', '~> 1.1.2'	# https://github.com/ustwo/US2FormValidator
@@ -27,15 +28,20 @@ Pod::Spec.new do |spec|
 	viewSpec.ios.dependency 'UIAlertView+Blocks'
 	viewSpec.ios.dependency 'UIActionSheet+Blocks'
 	viewSpec.ios.dependency 'HexColors'
+    viewSpec.ios.dependency 'MMDrawerController', '~> 0.5.2'
 	viewSpec.ios.resource_bundle = { 'IOSGViewResources' => 'Resources/**/*.*' }
 	
 	viewSpec.subspec "ViewCategories" do |categorySpec|
+        categorySpec.ios.xcconfig = {'OTHER_LDFLAGS' => '-all_load'}
 		categorySpec.source_files = 'Classes/View/Categories/*.{h,m}'
 	end
   end
   
   spec.subspec "Controller" do |controllerSpecs|
-	
+	 controllerSpecs.source_files = 'Classes/Controller/IOGController.h'
+     
+     controllerSpecs.dependency 'OpenUDID'
+
 		controllerSpecs.subspec "AWS" do |sp|
 			sp.subspec "S3" do |s3|
 				s3.source_files = 'Classes/Controller/AWS/S3/*.{h,m}'
@@ -58,14 +64,26 @@ Pod::Spec.new do |spec|
 			sp.source_files = 'Classes/Controller/LumberjackHelpers/*.{h,m}'
 		end
 		
-		controllerSpecs.subspec "LocationManager" do |sp|
-			sp.prefix_header_contents = '#import <CoreLocation/CoreLocation.h>'
-			sp.source_files = 'Classes/Controller/LocationManager/*.{h,m}'
+		controllerSpecs.subspec "CoreLocation" do |sp|
+			sp.prefix_header_contents = '#import <CoreLocation/CoreLocation.h>'	
+            sp.source_files = 'Classes/Controller/CoreLocation/*.{h,m}'
 			sp.ios.framework = 'CoreLocation'
+		end
+        
+        controllerSpecs.subspec "CoreBluetooth" do |sp|
+			sp.prefix_header_contents = '#import <CoreBluetooth/CoreBluetooth.h>'
+			sp.source_files = 'Classes/Controller/CoreBluetooth/*.{h,m}'
+            sp.ios.framework = 'CoreBluetooth'
 		end
 		
 		controllerSpecs.subspec "Categories" do |sp|
+            sp.ios.xcconfig = {'OTHER_LDFLAGS' => '-all_load'}
 			sp.source_files = 'Classes/Controller/Categories/*.{h,m}'
+		end
+        
+        controllerSpecs.subspec "Blocks" do |sp|
+			sp.source_files = 'Classes/Controller/Blocks/*.h'
+            # sp.dependency 'BlocksKit', '~>2.0.0'
 		end
   end
 end

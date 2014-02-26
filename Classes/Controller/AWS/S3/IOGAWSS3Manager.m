@@ -83,7 +83,7 @@ static NSString *_secretKey;
 
 #pragma mark - Helper Methods -
 
-- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGAWSS3ManagerCompletionBlock)completionBlock
+- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock
 {
     [self.backgroundOperationQueue addOperationWithBlock:^{
         AmazonServiceResponse *response = [[[IOGAWSS3Manager sharedManager] s3TransferManager] synchronouslyUploadFile:filePath bucket:bucket key:s3Filename];
