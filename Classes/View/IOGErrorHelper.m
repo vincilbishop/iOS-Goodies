@@ -37,7 +37,17 @@ static IOGErrorHelper *_sharedHelper;
 
 - (void) showErrorAlert:(NSError*)error
 {
-    [UIAlertView showWithTitle:@"Error" message:[NSString stringWithFormat:@"%@",error] cancelButtonTitle:@"Ok" otherButtonTitles:nil tapBlock:NULL];
+    NSString *message = nil;
+    
+    if ([error.userInfo objectForKey:@"error"]) { // Parse Error
+        message = [error.userInfo objectForKey:@"error"];
+    } else if ([error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"]) {
+        message = [error.userInfo objectForKey:@"NSLocalizedRecoverySuggestion"];
+    } else {
+        message = [error localizedDescription];
+    }
+    
+    [UIAlertView showWithTitle:@"Error" message:message cancelButtonTitle:@"Ok" otherButtonTitles:nil tapBlock:NULL];
 }
 
 #pragma mark - Notification -
