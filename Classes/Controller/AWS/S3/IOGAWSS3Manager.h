@@ -52,6 +52,6 @@
 + (void) setAccessKeyID:(NSString*)accessKeyID;
 + (void) setSecretKey:(NSString*)secretKey;
 
-- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock;
+- (void) uploadJPEGImage:(UIImage*)image bucket:(NSString*)bucket s3Filename:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock;
 
 @end

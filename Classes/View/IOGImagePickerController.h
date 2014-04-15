@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^IOGImagePickerBlock)(id sender, BOOL didPickImage, NSDictionary *info, UIImage *originalImage);
+typedef void (^IOGImagePickerBlock)(id sender, BOOL didPickImage, NSError *error, NSDictionary *info, UIImage *originalImage);
 
 @interface IOGImagePickerController : UIImagePickerController<UIImagePickerControllerDelegate>
 

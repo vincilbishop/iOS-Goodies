@@ -39,6 +39,8 @@ static NSString *_secretKey;
 {
     _accessKeyID = accessKeyID;
     _secretKey = secretKey;
+    
+    [self sharedManager];
 }
 
 - (id) init
@@ -83,17 +85,26 @@ static NSString *_secretKey;
 
 #pragma mark - Helper Methods -
 
-- (void) uploadFile:(NSString*)filePath bucket:(NSString*)bucket key:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock
+- (void) uploadJPEGImage:(UIImage*)image bucket:(NSString*)bucket s3Filename:(NSString*)s3Filename completion:(IOGCompletionBlock)completionBlock
 {
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+    
     [self.backgroundOperationQueue addOperationWithBlock:^{
-        AmazonServiceResponse *response = [[[IOGAWSS3Manager sharedManager] s3TransferManager] synchronouslyUploadFile:filePath bucket:bucket key:s3Filename];
+        
+        S3PutObjectRequest *putObjectRequest = [S3PutObjectRequest new];
+        putObjectRequest.data = imageData;
+        putObjectRequest.bucket = bucket;
+        putObjectRequest.key = s3Filename;
+        putObjectRequest.contentType = @"image/jpeg";
+        
+        AmazonServiceResponse *response = [[self s3TransferManager] synchronouslyUpload:putObjectRequest];
         
         DDLogVerbose(@"Async Upload Finished: %@", response);
         
         if (response.error) {
             
             DDLogVerbose(@"error: %@", response.error);
-        
+            
             if (completionBlock) {
                 completionBlock(self,NO,response.error,nil);
             }
@@ -104,6 +115,7 @@ static NSString *_secretKey;
                 completionBlock(self,YES,nil,response);
             }
         }
+ 
     }];
 }
 

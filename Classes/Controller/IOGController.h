@@ -14,4 +14,4 @@
 #import "IOGEnvironmentConfig.h"
 #import "IOGAWSS3Manager.h"
 #import "IOGPeripheralManager.h"
-
+#import "IOGTwilioClient.h"

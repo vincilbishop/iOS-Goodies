@@ -18,8 +18,9 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec "View" do |viewSpec|
-	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"', '#import "IOGBlocks.h"'
+	viewSpec.prefix_header_contents = '#import "RDVKeyboardAvoidingScrollView.h"', '#import "US2FormValidator.h"', '#import "IOGBlocks.h"', '#import <AssetsLibrary/AssetsLibrary.h>'
 	viewSpec.source_files = 'Classes/View/*.{h,m}'
+    
     viewSpec.ios.dependency 'iOS-Goodies/Controller/Blocks'
 	viewSpec.ios.dependency 'MBProgressHUD'
 	viewSpec.ios.dependency 'RDVKeyboardAvoiding' # https://github.com/robbdimitrov/RDVKeyboardAvoiding
@@ -29,8 +30,11 @@ Pod::Spec.new do |spec|
 	viewSpec.ios.dependency 'UIActionSheet+Blocks'
 	viewSpec.ios.dependency 'HexColors'
     viewSpec.ios.dependency 'MMDrawerController', '~> 0.5.2'
-	viewSpec.ios.resource_bundle = { 'IOSGViewResources' => 'Resources/**/*.*' }
-	
+	viewSpec.ios.dependency 'BlurryModalSegue'
+
+    viewSpec.ios.resource_bundle = { 'IOSGViewResources' => 'Resources/**/*.*' }
+	viewSpec.ios.framework = 'AssetsLibrary'
+
 	viewSpec.subspec "ViewCategories" do |categorySpec|
         categorySpec.ios.xcconfig = {'OTHER_LDFLAGS' => '-all_load'}
 		categorySpec.source_files = 'Classes/View/Categories/*.{h,m}'
@@ -60,7 +64,8 @@ Pod::Spec.new do |spec|
 		end
 		
 		controllerSpecs.subspec "LumberjackHelpers" do |sp|
-			sp.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"'
+            sp.ios.dependency 'LumberjackPrettyClassInformation'
+			sp.prefix_header_contents = '#import "Lumberjack-Default-Log-Level.h"', '#import "PrettyClassInformationLogFormatter.h"'
 			sp.source_files = 'Classes/Controller/LumberjackHelpers/*.{h,m}'
 		end
 		
@@ -77,6 +82,7 @@ Pod::Spec.new do |spec|
 		end
 		
 		controllerSpecs.subspec "Categories" do |sp|
+            sp.resources = ["Classes/View/Categories/IOGPlaceholderImage.png"]
             sp.ios.xcconfig = {'OTHER_LDFLAGS' => '-all_load'}
 			sp.source_files = 'Classes/Controller/Categories/*.{h,m}'
 		end
@@ -84,6 +90,12 @@ Pod::Spec.new do |spec|
         controllerSpecs.subspec "Blocks" do |sp|
 			sp.source_files = 'Classes/Controller/Blocks/*.h'
             # sp.dependency 'BlocksKit', '~>2.0.0'
+		end
+        
+        controllerSpecs.subspec "Twilio" do |sp|
+			sp.source_files = 'Classes/Controller/Twilio/*.{h,m}'
+            sp.prefix_header_contents = '#import "TwilioClient.h"'
+            sp.dependency 'TwilioSDK'
 		end
   end
 end
